@@ -1,0 +1,73 @@
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <form [formGroup]="signupForm" (ngSubmit)="submitForm()" autocomplete="off">
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" formControlName="name"
+                        [ngClass]="{ 'is-invalid': signupForm.get('name').touched && !signupForm.get('name').valid}">
+                    <div class="invalid-feedback" *ngIf="signupForm.get('name').touched && !signupForm.get('name').valid">
+                        <span *ngIf="signupForm.get('name').hasError('required')">
+                            Name is Required
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" formControlName="email"
+                        [ngClass]="{ 'is-invalid': signupForm.get('email').touched && !signupForm.get('email').valid}">
+                    <div class="invalid-feedback" *ngIf="signupForm.get('email').touched && !signupForm.get('email').valid">
+                        <span *ngIf="signupForm.get('email').hasError('required')">
+                            Email is Required
+                        </span>
+                        <span *ngIf="signupForm.get('email').hasError('email')">
+                            Email Must be Valid
+                        </span>
+                    </div>
+                </div>
+                <div formGroupName="passwordForm">
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" formControlName="password"
+                            [ngClass]="{ 'is-invalid': signupForm.get('passwordForm.password').touched && !signupForm.get('passwordForm.password').valid}">
+                        <div class="invalid-feedback" *ngIf="signupForm.get('passwordForm.password').touched && !signupForm.get('passwordForm.password').valid">
+                            <span *ngIf="signupForm.get('passwordForm.password').hasError('required')">
+                                Password is Required
+                            </span>
+                            <span *ngIf="signupForm.get('passwordForm.password').hasError('minlength')">
+                                Password Must be 6 characters long.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                            [ngClass]="{ 'is-invalid': signupForm.get('passwordForm.confirmPassword').touched && !signupForm.get('passwordForm.confirmPassword').valid}">
+                        <div class="invalid-feedback" *ngIf="signupForm.get('passwordForm.confirmPassword').touched && !signupForm.get('passwordForm.confirmPassword').valid">
+                            <span *ngIf="signupForm.get('passwordForm.confirmPassword').hasError('required')">
+                                Password is Required
+                            </span>
+                            <span *ngIf="signupForm.get('passwordForm.confirmPassword').hasError('equalTo')">
+                                Passwords do not match
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <button type="submit" class="btn btn-primary mr-3"
+                        [disabled]="!signupForm.valid || aDisabledBtn">
+                        Signup
+                    </button>
+                    <div class="text-primary spinner-border" role="status"
+                        *ngIf="apiSignupInProgress">
+                    </div>
+                </div>
+                <a [routerLink]="['/login']">
+                    Login
+                </a>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm()" autocomplete="off">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" formControlName="email"
+                        [ngClass]="{ 'is-invalid': loginForm.get('email').touched && !loginForm.get('email').valid}">
+                    <div class="invalid-feedback" *ngIf="loginForm.get('email').touched && !loginForm.get('email').valid">
+                        <span *ngIf="loginForm.get('email').hasError('required')">
+                            Email is Required
+                        </span>
+                        <span *ngIf="loginForm.get('email').hasError('email')">
+                            Email Must be Valid
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password"
+                        [ngClass]="{ 'is-invalid': loginForm.get('password').touched && !loginForm.get('password').valid}">
+                    <div class="invalid-feedback" *ngIf="loginForm.get('password').touched && !loginForm.get('password').valid">
+                        <span *ngIf="loginForm.get('password').hasError('required')">
+                            Password is Required
+                        </span>
+                        <span *ngIf="loginForm.get('password').hasError('minlength')">
+                            Password Must be 6 characters long.
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <button type="submit" class="btn btn-primary mr-3"
+                        [disabled]="!loginForm.valid || aDisabledBtn">
+                        Login
+                    </button>
+                    <div class="text-primary spinner-border" role="status"
+                        *ngIf="apiLoginInProgress">
+                    </div>
+                </div>
+                <a [routerLink]="['/signup']">
+                    Create an account
+                </a>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+    production: false,
+    apiUrl: 'https://arcane-falls-70579.herokuapp.com/api/'
 };
 
 /*
