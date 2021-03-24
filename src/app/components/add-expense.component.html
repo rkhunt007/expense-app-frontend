@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+        {{ editMode ? 'Modify Expense' : 'Add Expense' }}
+    </h4>
+    <button type="button" class="close" (click)="onHideModal()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col">
+            <form [formGroup]="expenseForm" (ngSubmit)="submitForm()" autocomplete="off">
+                <div class="form-group">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount" formControlName="amount"
+                        [ngClass]="{ 'is-invalid': expenseForm.get('amount').touched && !expenseForm.get('amount').valid}">
+                    <div class="invalid-feedback"
+                        *ngIf="expenseForm.get('amount').touched && !expenseForm.get('amount').valid">
+                        <span *ngIf="expenseForm.get('amount').hasError('required')">
+                            Amount is Required
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="description"
+                        formControlName="description"
+                        [ngClass]="{ 'is-invalid': expenseForm.get('description').touched && !expenseForm.get('description').valid}">
+                    <div class="invalid-feedback"
+                        *ngIf="expenseForm.get('description').touched && !expenseForm.get('description').valid">
+                        <span *ngIf="expenseForm.get('description').hasError('required')">
+                            Description is Required
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="category" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="category" formControlName="category"
+                        [ngClass]="{ 'is-invalid': expenseForm.get('category').touched && !expenseForm.get('category').valid}">
+                    <div class="invalid-feedback"
+                        *ngIf="expenseForm.get('category').touched && !expenseForm.get('category').valid">
+                        <span *ngIf="expenseForm.get('category').hasError('required')">
+                            Category is Required
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="type" class="form-label">Type</label>
+                    <select name="type" class="form-control" formControlName="type">
+                        <option value="1">On Credit</option>
+                        <option value="2">Upfront</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="type" class="form-label">Type</label>
+                    <input type="text" formControlName="date" placeholder="Datepicker"
+                        class="form-control" [bsConfig]="{ adaptivePosition: true }" bsDatepicker>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <button type="submit" class="btn btn-primary mr-3"
+                        [disabled]="!expenseForm.valid || aDisabledBtn">
+                        {{ editMode ? 'Modify' : 'Create' }}
+                    </button>
+                    <div class="text-primary spinner-border" *ngIf="apiLoginInProgress">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

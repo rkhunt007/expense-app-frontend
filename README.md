@@ -1,3 +1,10 @@
+# Deploy Steps
+
+1. `ng build --prod`
+
+2. `firebase deploy`
+
+
 # AngularExpenseApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.5.

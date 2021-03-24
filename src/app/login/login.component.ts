@@ -18,17 +18,16 @@ export class LoginComponent implements OnInit {
         private toast: ToastrService, private router: Router) { }
 
     ngOnInit(): void {
+
+        this.api.autoLogin();
+
         this.loginForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]]
-        })
+        });
     }
 
     submitForm() {
-        console.log(this.loginForm.value);
-        console.log(this.loginForm.controls.email.errors);
-        console.log(this.loginForm.controls.password.errors);
-
         if (!this.loginForm.valid) {
             return;
         }

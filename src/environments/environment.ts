@@ -4,7 +4,8 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://arcane-falls-70579.herokuapp.com/api/'
+    //apiUrl: 'https://arcane-falls-70579.herokuapp.com/api/'
+    apiUrl: 'http://localhost:5000/api/'
 };
 
 /*

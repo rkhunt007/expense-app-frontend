@@ -36,7 +36,6 @@ export class SignupComponent implements OnInit {
     }
 
     submitForm() {
-        console.log(this.signupForm.value);
 
         if (!this.signupForm.valid) {
             return;

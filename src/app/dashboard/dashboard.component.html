@@ -1,1 +1,74 @@
-<p>dashboard works!</p>
+<div class="container">
+
+    <br>
+
+    <div class="row mb-2">
+        <div class="col mb-2 mb-md-0">
+            <button class="btn btn-primary" (click)="initAddExpenseModal(addExpenseModal)">
+                Add
+            </button>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <input type="text" placeholder="Select Month" (onHidden)="onHidden()"
+                    [(ngModel)]="selectedDate" class="form-control"
+                    [bsConfig]="{ adaptivePosition: true, minMode : 'month', dateInputFormat: 'MMM-YYYY' }"
+                    bsDatepicker>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col">
+            Total: On Credit <b>{{ total.onCredit | currency }}</b> | Upfront <b>{{ total.upFront | currency }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div>
+                <h4>On Credit</h4>
+                <ngx-datatable class="bootstrap" [rows]="expenses.onCredit" [columns]="columns"
+                    [headerHeight]="50" [rowHeight]="50" [scrollbarH]="'true'">
+                </ngx-datatable>
+            </div>
+
+            <div>
+                <h4>Upfront</h4>
+                <ngx-datatable class="bootstrap" [rows]="expenses.upfront" [columns]="columns"
+                    [headerHeight]="50" [rowHeight]="50" [scrollbarH]="'true'">
+                </ngx-datatable>
+            </div>
+
+            <ng-template #amount let-row="row" ngx-datatable-cell-template>
+                {{ row.amount | currency }}
+            </ng-template>
+
+            <ng-template #date let-row="row" ngx-datatable-cell-template>
+                {{ row.date | date: 'mediumDate' }}
+            </ng-template>
+
+            <ng-template #actions let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-sm btn-info mr-1"
+                    (click)="initAddExpenseModal(addExpenseModal, row)">
+                    Edit
+                </button>
+                <button class="btn btn-sm btn-danger"
+                    (click)="openDeleteExpenseModal(deleteExpenseModal, row)">
+                    Delete
+                </button>
+            </ng-template>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #addExpenseModal let-modal>
+    <app-add-expense (hideModal)="hideModal($event)" [expense]="selectedExpense"></app-add-expense>
+</ng-template>
+
+<ng-template #deleteExpenseModal>
+    <div class="modal-body text-center">
+        <p>Do you want to delete the expense?</p>
+        <button type="button" class="btn btn-danger" (click)="confirm()">Delete</button>
+        <button type="button" class="btn " (click)="decline()">Cancel</button>
+    </div>
+</ng-template>
