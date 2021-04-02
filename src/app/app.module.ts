@@ -8,12 +8,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AddExpenseModule } from './components/add-expense.module';
+import { AddExpenseModule } from './components/add-expense/add-expense.module';
 import { SharedModule } from './shared.module';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AddIncomeModule } from './components/add-income/add-income.module';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
         AppRoutingModule,
         HttpClientModule,
         AddExpenseModule,
+        AddIncomeModule,
         BsDatepickerModule.forRoot(),
         ToastrModule.forRoot({
             timeOut: 5000,

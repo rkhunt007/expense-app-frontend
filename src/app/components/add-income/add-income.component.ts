@@ -1,22 +1,22 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ApiService } from '../api.service';
-import { UtilService } from '../services/utils.service';
+import { ApiService } from '../../api.service';
+import { UtilService } from '../../services/utils.service';
 
 @Component({
-    selector: 'app-add-expense',
-    templateUrl: 'add-expense.component.html'
+    selector: 'app-add-income',
+    templateUrl: 'add-income.component.html'
 })
 
-export class AddExpenseComponent implements OnInit {
+export class AddIncomeComponent implements OnInit {
 
     @Output() hideModal = new EventEmitter();
-    expenseForm: FormGroup;
+    incomeForm: FormGroup;
     aDisabledBtn = false;
     apiLoginInProgress = false;
     editMode = false;
-    @Input('expense') expense: any;
+    @Input('income') income: any;
 
     constructor(
         private fb: FormBuilder,
@@ -26,7 +26,7 @@ export class AddExpenseComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        if (this.expense) {
+        if (this.income) {
             this.editMode = true;
         }
         this.initForm();
@@ -34,35 +34,30 @@ export class AddExpenseComponent implements OnInit {
 
     initForm() {
         if (!this.editMode) {
-            this.expenseForm = this.fb.group({
+            this.incomeForm = this.fb.group({
                 amount: ['', [Validators.required]],
-                description: ['', [Validators.required]],
                 category: ['', [Validators.required]],
-                type: [1, [Validators.required]],
                 date: [null, [Validators.required]],
             });
         } else {
 
-            const typeId = this.utils.getIdFromType(this.expense.type);
-            const date = new Date(this.expense.date);
+            const date = new Date(this.income.date);
 
-            this.expenseForm = this.fb.group({
-                amount: [this.expense.amount, [Validators.required]],
-                description: [this.expense.description, [Validators.required]],
-                category: [this.expense.category, [Validators.required]],
-                type: [typeId, [Validators.required]],
+            this.incomeForm = this.fb.group({
+                amount: [this.income.amount, [Validators.required]],
+                category: [this.income.category, [Validators.required]],
                 date: [date, [Validators.required]],
             });
         }
     }
 
     submitForm() {
-        if (!this.expenseForm.valid) {
+        if (!this.incomeForm.valid) {
             return;
         }
         this.aDisabledBtn = true;
         this.apiLoginInProgress = true;
-        this.saveExpense().subscribe(
+        this.saveIncome().subscribe(
             res => {
                 this.aDisabledBtn = false;
                 this.onHideModal();
@@ -73,11 +68,11 @@ export class AddExpenseComponent implements OnInit {
         );
     }
 
-    saveExpense() {
+    saveIncome() {
         if (this.editMode) {
-            return this.api.editExpense(this.expenseForm.value, this.expense._id);
+            return this.api.editIncome(this.incomeForm.value, this.income._id);
         } else {
-            return this.api.createExpense(this.expenseForm.value);
+            return this.api.createIncome(this.incomeForm.value);
         }
     }
 

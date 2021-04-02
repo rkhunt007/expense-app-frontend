@@ -5,7 +5,10 @@
     <div class="row mb-2">
         <div class="col mb-2 mb-md-0">
             <button class="btn btn-primary" (click)="initAddExpenseModal(addExpenseModal)">
-                Add
+                Add Expense
+            </button>
+            <button class="btn btn-primary ml-2" (click)="initAddIncomeModal(addIncomeModal)">
+                Add Income
             </button>
         </div>
         <div class="col-md-3">
@@ -58,11 +61,43 @@
             </ng-template>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+
+            <div>
+                <h4>Savings</h4>
+                <ngx-datatable class="bootstrap" [rows]="incomes.income" [columns]="incomes.columns"
+                    [headerHeight]="50" [rowHeight]="50" [scrollbarH]="'true'">
+                </ngx-datatable>
+            </div>
+
+            <ng-template #incomeActions let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-sm btn-info mr-1"
+                    (click)="initAddIncomeModal(addIncomeModal, row)">
+                    Edit
+                </button>
+            </ng-template>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col h4 mt-2">
+            Total Income: {{incomes.total | currency}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col h4 mt-2">
+            Savings: {{incomes.total - total.upFront | currency}}
+        </div>
+    </div>
 
 </div>
 
 <ng-template #addExpenseModal let-modal>
     <app-add-expense (hideModal)="hideModal($event)" [expense]="selectedExpense"></app-add-expense>
+</ng-template>
+
+<ng-template #addIncomeModal let-modal>
+    <app-add-income (hideModal)="hideIncomeModal($event)" [income]="selectedIncome"></app-add-income>
 </ng-template>
 
 <ng-template #deleteExpenseModal>

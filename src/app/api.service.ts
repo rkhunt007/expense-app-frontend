@@ -75,6 +75,30 @@ export class ApiService {
         ).pipe(catchError(this.handleError.bind(this)));
     }
 
+    getAllIncomes(date?: any) {
+        return this.http.get(
+            `${environment.apiUrl}income?date=${date}`
+        ).pipe(catchError(this.handleError.bind(this)));
+    }
+
+    createIncome(data) {
+        return this.http.post(
+            `${environment.apiUrl}income`, data
+        ).pipe(catchError(this.handleError.bind(this)));
+    }
+
+    editIncome(data: any, id: string) {
+        return this.http.put(
+            `${environment.apiUrl}income/${id}`, data
+        ).pipe(catchError(this.handleError.bind(this)));
+    }
+
+    deleteIncome(id) {
+        return this.http.delete(
+            `${environment.apiUrl}expense/${id}`
+        ).pipe(catchError(this.handleError.bind(this)));
+    }
+
     handleError(error: HttpErrorResponse) {
         let errorMsg = 'Unknown Error';
         if (error.status == 401) {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared.module';
+import { SharedModule } from '../../shared.module';
 
-import { AddExpenseComponent } from './add-expense.component';
+import { AddIncomeComponent } from './add-income.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
@@ -9,8 +9,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
         SharedModule,
         BsDatepickerModule.forRoot(),
     ],
-    exports: [AddExpenseComponent],
-    declarations: [AddExpenseComponent],
+    exports: [AddIncomeComponent],
+    declarations: [AddIncomeComponent],
     providers: [],
 })
-export class AddExpenseModule { }
+export class AddIncomeModule { }

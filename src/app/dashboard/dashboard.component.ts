@@ -15,16 +15,20 @@ export class DashboardComponent implements OnInit {
         onCredit: []
     };
     modalRef: BsModalRef;
+    incomeModalRef: BsModalRef;
     deleteModalRef: BsModalRef;
     selectedExpense: any;
+    selectedIncome: any;
     selectedDate = new Date();
     oldSelectedDate = new Date();
     total: any = {};
     @ViewChild('amount', {static: true}) amount: TemplateRef<any>;
     @ViewChild('date', {static: true}) date: TemplateRef<any>;
     @ViewChild('actions', {static: true}) actions: TemplateRef<any>;
+    @ViewChild('incomeActions', {static: true}) incomeActions: TemplateRef<any>;
     columns = [];
-    rows = []
+    rows = [];
+    incomes: any = {};
 
     constructor(private apiService: ApiService,
         private util: UtilService, private toast: ToastrService,
@@ -32,12 +36,19 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
         this.getAllExpenses();
+        this.getAllIncomes();
         this.columns = [
             { name: 'Amount', cellTemplate: this.amount, width: 80 },
             { prop: 'category', name: 'Category' },
             { prop: 'description', name: 'Description'},
             { name: 'Date', cellTemplate: this.date },
             { name: 'Action', cellTemplate: this.actions }
+        ];
+        this.incomes.columns = [
+            { name: 'Amount', cellTemplate: this.amount, width: 80 },
+            { prop: 'category', name: 'Category' },
+            { name: 'Date', cellTemplate: this.date },
+            { name: 'Action', cellTemplate: this.incomeActions }
         ];
     }
 
@@ -51,8 +62,15 @@ export class DashboardComponent implements OnInit {
                 exp.type = this.util.getTypeFromId(exp.type);
             });
             this.rows = this.expenses.onCredit;
-            // this.expenses = res.expenses;
             this.total = res.total;
+        });
+    }
+
+    getAllIncomes() {
+        this.apiService.getAllIncomes(this.selectedDate).subscribe(res => {
+            this.incomes.income = res.incomes;
+            this.incomes.total = res.total.income;
+            console.log(this.incomes)
         });
     }
 
@@ -61,10 +79,22 @@ export class DashboardComponent implements OnInit {
         this.modalRef = this.bsModalService.show(template);
     }
 
+    initAddIncomeModal(template: TemplateRef<any>, income = null) {
+        this.selectedIncome = income;
+        this.incomeModalRef = this.bsModalService.show(template);
+    }
+
     hideModal(event) {
         this.modalRef.hide();
         if (event === 'afterSaved') {
             this.getAllExpenses();
+        }
+    }
+
+    hideIncomeModal(event) {
+        this.incomeModalRef.hide();
+        if (event === 'afterSaved') {
+            this.getAllIncomes();
         }
     }
 
@@ -95,6 +125,7 @@ export class DashboardComponent implements OnInit {
         if (this.oldSelectedDate != this.selectedDate) {
             this.oldSelectedDate = this.selectedDate;
             this.getAllExpenses();
+            this.getAllIncomes();
         }
     }
 

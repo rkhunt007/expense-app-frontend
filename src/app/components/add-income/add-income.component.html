@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+        {{ editMode ? 'Modify Income' : 'Add Income' }}
+    </h4>
+    <button type="button" class="close" (click)="onHideModal()">
+        <span>&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col">
+            <form [formGroup]="incomeForm" (ngSubmit)="submitForm()" autocomplete="off">
+                <div class="form-group">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount" formControlName="amount"
+                        [ngClass]="{ 'is-invalid': incomeForm.get('amount').touched && !incomeForm.get('amount').valid}">
+                    <div class="invalid-feedback"
+                        *ngIf="incomeForm.get('amount').touched && !incomeForm.get('amount').valid">
+                        <span *ngIf="incomeForm.get('amount').hasError('required')">
+                            Amount is Required
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="category" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="category" formControlName="category"
+                        [ngClass]="{ 'is-invalid': incomeForm.get('category').touched && !incomeForm.get('category').valid}">
+                    <div class="invalid-feedback"
+                        *ngIf="incomeForm.get('category').touched && !incomeForm.get('category').valid">
+                        <span *ngIf="incomeForm.get('category').hasError('required')">
+                            Category is Required
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="type" class="form-label">Type</label>
+                    <input type="text" formControlName="date" placeholder="Datepicker"
+                        class="form-control" [bsConfig]="{ adaptivePosition: true }" bsDatepicker>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <button type="submit" class="btn btn-primary mr-3"
+                        [disabled]="!incomeForm.valid || aDisabledBtn">
+                        {{ editMode ? 'Modify' : 'Create' }}
+                    </button>
+                    <div class="text-primary spinner-border" *ngIf="apiLoginInProgress">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
