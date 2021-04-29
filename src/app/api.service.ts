@@ -28,7 +28,6 @@ export class ApiService {
     }
 
     autoLogin() {
-        console.log('ApiService::autoLogin');
         const token = localStorage.getItem('token');
         if (token) {
             this.auth(token).subscribe(

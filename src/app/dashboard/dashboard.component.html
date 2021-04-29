@@ -1,8 +1,6 @@
 <div class="container">
 
-    <br>
-
-    <div class="row mb-2">
+    <div class="row my-2">
         <div class="col mb-2 mb-md-0">
             <button class="btn btn-primary" (click)="initAddExpenseModal(addExpenseModal)">
                 Add Expense
@@ -29,7 +27,7 @@
         <div class="col">
             <div>
                 <h4>On Credit</h4>
-                <ngx-datatable class="bootstrap" [rows]="expenses.onCredit" [columns]="columns"
+                <ngx-datatable class="bootstrap" [rows]="expenses.onCredit" [columns]="columns" [columnMode]="'force'"
                     [headerHeight]="50" [rowHeight]="50" [scrollbarH]="'true'">
                 </ngx-datatable>
             </div>
@@ -52,11 +50,11 @@
             <ng-template #actions let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-sm btn-info mr-1"
                     (click)="initAddExpenseModal(addExpenseModal, row)">
-                    Edit
+                    <i class="fas fa-pencil-alt"></i>
                 </button>
                 <button class="btn btn-sm btn-danger"
                     (click)="openDeleteExpenseModal(deleteExpenseModal, row)">
-                    Delete
+                    <i class="fas fa-trash"></i>
                 </button>
             </ng-template>
         </div>
@@ -66,7 +64,7 @@
 
             <div>
                 <h4>Savings</h4>
-                <ngx-datatable class="bootstrap" [rows]="incomes.income" [columns]="incomes.columns"
+                <ngx-datatable class="bootstrap" [rows]="incomes.income" [columns]="incomes.columns" [columnMode]="'force'"
                     [headerHeight]="50" [rowHeight]="50" [scrollbarH]="'true'">
                 </ngx-datatable>
             </div>
@@ -74,7 +72,7 @@
             <ng-template #incomeActions let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-sm btn-info mr-1"
                     (click)="initAddIncomeModal(addIncomeModal, row)">
-                    Edit
+                    <i class="fas fa-pencil-alt"></i>
                 </button>
             </ng-template>
         </div>
@@ -87,6 +85,16 @@
     <div class="row">
         <div class="col h4 mt-2">
             Savings: {{incomes.total - total.upFront | currency}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <canvas baseChart
+                [data]="pieChartData"
+                [labels]="pieChartLabels"
+                [chartType]="pieChartType"
+                [colors]="pieChartColors"></canvas>
         </div>
     </div>
 
